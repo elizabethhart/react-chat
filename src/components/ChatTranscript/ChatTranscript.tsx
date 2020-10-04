@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
+import ChatTranscriptInput from "../ChatTranscriptInput";
 import "./ChatTranscript.scss";
 
 interface ChatTranscriptProps {
@@ -7,45 +8,15 @@ interface ChatTranscriptProps {
   handleSetChatList: Function;
 }
 
+/**
+ * Component for displaying a user's current chat
+ */
 const ChatTranscript: React.FC<ChatTranscriptProps> = ({
   currentUser,
   chatList,
   handleSetChatList,
 }) => {
-  const [newMessage, setNewMessage] = useState<string>("");
-
-  const onKeyDown = useCallback(
-    (event) => {
-      const { keyCode } = event;
-
-      if (keyCode === 13) {
-        const newChatListItem = {
-          user: currentUser,
-          message: newMessage,
-        };
-
-        const newChatList = [...chatList, newChatListItem];
-
-        handleSetChatList(newChatList);
-        setNewMessage("");
-      }
-    },
-    [chatList, currentUser, handleSetChatList, newMessage]
-  );
-
-  useEffect(() => {
-    window.addEventListener("keydown", onKeyDown);
-
-    return () => {
-      document.removeEventListener("keydown", onKeyDown);
-    };
-  }, [onKeyDown]);
-
-  function handleInputChange(inputMessage: string) {
-    setNewMessage(inputMessage);
-  }
-
-  function handleSendClick() {
+  function handleSendNewMessage(newMessage: string) {
     const newChatListItem = {
       user: currentUser,
       message: newMessage,
@@ -54,8 +25,6 @@ const ChatTranscript: React.FC<ChatTranscriptProps> = ({
     const newChatList = [...chatList, newChatListItem];
 
     handleSetChatList(newChatList);
-
-    setNewMessage("");
   }
 
   function getCurrentChatUsers() {
@@ -94,18 +63,11 @@ const ChatTranscript: React.FC<ChatTranscriptProps> = ({
           }
         })}
       </div>
-      <div className="transcript-input">
-        <input
-          type="text"
-          name="message"
-          aria-label="new-message"
-          value={newMessage}
-          onChange={(e) => handleInputChange(e.target.value)}
-        />
-        <button className="send" onClick={() => handleSendClick()}>
-          Send
-        </button>
-      </div>
+      <ChatTranscriptInput
+        handleSendNewMessage={(newMessage: string) =>
+          handleSendNewMessage(newMessage)
+        }
+      />
     </div>
   );
 };

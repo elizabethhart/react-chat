@@ -1,0 +1,46 @@
+.transcript-input {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  border: 1px solid #424246;
+  border-radius: 4px;
+  width: 80%;
+  margin: auto auto 20px;
+  background-color: white;
+  justify-content: space-between;
+
+  input {
+    display: flex;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    border: none;
+    margin-left: 20px;
+    background-color: transparent;
+    width: 100%;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  button {
+    display: flex;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
+
+    &.send {
+      border-radius: 0px 4px 4px 0px;
+      border: none;
+      border-left: 1px solid black;
+      margin: auto;
+      background-color: #d5f5ee;
+      font-size: 20px;
+    }
+  }
+}

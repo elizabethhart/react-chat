@@ -7,6 +7,9 @@ interface ChatHistoryProps {
   handleSetCurrentChatId: Function;
 }
 
+/**
+ * Component for displaying a user's chat history
+ */
 const ChatHistory: React.FC<ChatHistoryProps> = ({
   chatLists,
   currentChatId,
