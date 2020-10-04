@@ -1,6 +1,15 @@
 .history {
   display: flex;
+  flex-direction: column;
   flex-grow: 1;
   max-width: 20%;
   height: 100%;
+
+  .history-item {
+    display: flex;
+
+    &.active {
+      background-color: green;
+    }
+  }
 }

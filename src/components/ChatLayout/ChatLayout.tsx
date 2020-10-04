@@ -27,6 +27,22 @@ const ChatLayout: React.FC<ChatLayoutProps> = () => {
         message: "Hi",
       },
     ],
+    [
+      {
+        user: {
+          id: 3,
+          name: "Mark",
+        },
+        message: "Hello",
+      },
+      {
+        user: {
+          id: 2,
+          name: "Jane",
+        },
+        message: "Hi",
+      },
+    ],
   ]);
   const [currentChatId, setCurrentChatId] = useState<number>(0);
 
