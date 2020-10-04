@@ -1,6 +1,20 @@
 # React Chat
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Technologies
+
+- [Create React App](https://github.com/facebook/create-react-app).
+- Typescript
+- Sass
+
+## Basic Functionality
+
+- The user should be able to write messages in the chat window and see them appear.
+- The user should be able to select a friend and see his chat with this friend.
+
+## Future TODOs
+
+- Testing
+- Emoji Support
 
 ## Available Scripts
 
