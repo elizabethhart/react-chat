@@ -12,29 +12,16 @@ const ChatHistory: React.FC<ChatHistoryProps> = ({
   currentChatId,
   handleSetCurrentChatId,
 }) => {
-  function getChatUsers(chatList: ChatListItem[]) {
-    let chatUsers: User[] = [];
+  function buildChatHistoryItem(chatList: ChatListItem[]) {
+    let chatUsers: string[] = [];
+
     chatList.forEach((chatListItem: ChatListItem) => {
-      let chatListItemUser = chatListItem.user;
-      if (chatUsers.indexOf(chatListItemUser) === -1) {
-        chatUsers.push(chatListItemUser);
+      if (chatUsers.indexOf(chatListItem.user.name) === -1) {
+        chatUsers.push(chatListItem.user.name);
       }
     });
 
-    return chatUsers;
-  }
-
-  function buildChatHistoryItem(chatList: ChatListItem[]) {
-    let chatUsers = getChatUsers(chatList);
-
-    return chatUsers
-      .map((user) => {
-        return user.name;
-      })
-      .filter((value) => {
-        return value;
-      })
-      .join(", ");
+    return chatUsers.join(", ");
   }
 
   return (

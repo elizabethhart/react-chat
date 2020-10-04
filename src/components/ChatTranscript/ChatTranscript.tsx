@@ -14,13 +14,24 @@ const ChatTranscript: React.FC<ChatTranscriptProps> = ({
 }) => {
   const [newMessage, setNewMessage] = useState<string>("");
 
-  const onKeyDown = useCallback((event) => {
-    const { keyCode } = event;
+  const onKeyDown = useCallback(
+    (event) => {
+      const { keyCode } = event;
 
-    if (keyCode === 13) {
-      // handle 'Enter' click for adding new message
-    }
-  }, []);
+      if (keyCode === 13) {
+        const newChatListItem = {
+          user: currentUser,
+          message: newMessage,
+        };
+
+        const newChatList = [...chatList, newChatListItem];
+
+        handleSetChatList(newChatList);
+        setNewMessage("");
+      }
+    },
+    [chatList, currentUser, handleSetChatList, newMessage]
+  );
 
   useEffect(() => {
     window.addEventListener("keydown", onKeyDown);
@@ -32,10 +43,6 @@ const ChatTranscript: React.FC<ChatTranscriptProps> = ({
 
   function handleInputChange(inputMessage: string) {
     setNewMessage(inputMessage);
-  }
-
-  function handleEmojiClick() {
-    // TODO: Add Emoji Library
   }
 
   function handleSendClick() {
@@ -51,9 +58,24 @@ const ChatTranscript: React.FC<ChatTranscriptProps> = ({
     setNewMessage("");
   }
 
+  function getCurrentChatUsers() {
+    let chatUsers: string[] = [];
+
+    chatList.forEach((chatListItem: ChatListItem) => {
+      if (
+        chatUsers.indexOf(chatListItem.user.name) === -1 &&
+        chatListItem.user.name !== currentUser.name
+      ) {
+        chatUsers.push(chatListItem.user.name);
+      }
+    });
+
+    return chatUsers.join(", ");
+  }
+
   return (
     <div className="transcript">
-      <div className="transcript-header">Chat Transcript Header</div>
+      <div className="transcript-header">To: {getCurrentChatUsers()}</div>
       <div className="transcript-body">
         {chatList.map((chatItem, index) => {
           if (chatItem.user.id === currentUser.id) {
@@ -65,7 +87,8 @@ const ChatTranscript: React.FC<ChatTranscriptProps> = ({
           } else {
             return (
               <div className="transcript-body-item" key={index}>
-                {chatItem.user.name}: {chatItem.message}
+                <span className="sender">{chatItem.user.name}:</span>{" "}
+                {chatItem.message}
               </div>
             );
           }
@@ -74,11 +97,14 @@ const ChatTranscript: React.FC<ChatTranscriptProps> = ({
       <div className="transcript-input">
         <input
           type="text"
+          name="message"
+          aria-label="new-message"
           value={newMessage}
           onChange={(e) => handleInputChange(e.target.value)}
         />
-        <button onClick={() => handleEmojiClick()}>:)</button>
-        <button onClick={() => handleSendClick()}>Send</button>
+        <button className="send" onClick={() => handleSendClick()}>
+          Send
+        </button>
       </div>
     </div>
   );

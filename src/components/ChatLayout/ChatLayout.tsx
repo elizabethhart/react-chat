@@ -33,14 +33,14 @@ const ChatLayout: React.FC<ChatLayoutProps> = () => {
           id: 3,
           name: "Mark",
         },
-        message: "Hello",
+        message: "What's up?",
       },
       {
         user: {
           id: 2,
           name: "Jane",
         },
-        message: "Hi",
+        message: "Hey!",
       },
     ],
   ]);

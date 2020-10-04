@@ -1,7 +1,13 @@
 .layout {
+  margin: auto;
+  max-width: 800px;
+  min-height: 800px;
   display: flex;
   flex-direction: row;
+  align-items: stretch;
   justify-content: center;
-  align-items: center;
   text-align: center;
+  background-color: #bbb6b6;
+  border-radius: 4px;
+  padding: 20px;
 }
