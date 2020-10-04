@@ -1,5 +1,38 @@
 .transcript {
   display: flex;
   flex-grow: 1;
+  flex-direction: column;
+  justify-content: space-between;
   height: 100%;
+
+  .transcript-header {
+    display: flex;
+  }
+
+  .transcript-body {
+    display: flex;
+    flex-direction: column;
+
+    .transcript-body-item {
+      margin-right: auto;
+
+      &.current-user {
+        margin-right: 0;
+      }
+    }
+  }
+
+  .transcript-input {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+
+    input {
+      display: flex;
+    }
+
+    button {
+      display: flex;
+    }
+  }
 }
