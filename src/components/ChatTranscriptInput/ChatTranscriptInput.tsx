@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useState } from "react";
 import "./ChatTranscriptInput.scss";
 
 interface ChatTranscriptInputProps {
+  draftMessage: string;
+  handleDraftMessageStorage: Function;
   handleSendNewMessage: Function;
 }
 
@@ -9,9 +11,13 @@ interface ChatTranscriptInputProps {
  * Component that handles user input
  */
 const ChatTranscriptInput: React.FC<ChatTranscriptInputProps> = ({
+  draftMessage,
+  handleDraftMessageStorage,
   handleSendNewMessage,
 }) => {
-  const [newMessage, setNewMessage] = useState<string>("");
+  const [newMessage, setNewMessage] = useState<string>(
+    draftMessage.length > 0 ? draftMessage : ""
+  );
 
   const onKeyDown = useCallback(
     (event) => {
@@ -19,9 +25,10 @@ const ChatTranscriptInput: React.FC<ChatTranscriptInputProps> = ({
       if (event.keyCode === 13 && newMessage.length > 0) {
         handleSendNewMessage(newMessage);
         setNewMessage("");
+        handleDraftMessageStorage("");
       }
     },
-    [newMessage, handleSendNewMessage]
+    [newMessage, handleSendNewMessage, handleDraftMessageStorage]
   );
 
   useEffect(() => {
@@ -35,6 +42,12 @@ const ChatTranscriptInput: React.FC<ChatTranscriptInputProps> = ({
   function handleSendClick() {
     handleSendNewMessage(newMessage);
     setNewMessage("");
+    handleDraftMessageStorage("");
+  }
+
+  function handleInputChange(draftMessage: string) {
+    setNewMessage(draftMessage);
+    handleDraftMessageStorage(draftMessage);
   }
 
   return (
@@ -43,8 +56,8 @@ const ChatTranscriptInput: React.FC<ChatTranscriptInputProps> = ({
         type="text"
         name="message"
         aria-label="message"
-        value={newMessage}
-        onChange={(e) => setNewMessage(e.target.value)}
+        value={draftMessage}
+        onChange={(e) => handleInputChange(e.target.value)}
       />
       <button
         disabled={newMessage.length === 0}

@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import ChatTranscriptInput from "../ChatTranscriptInput";
 import "./ChatTranscript.scss";
 
 interface ChatTranscriptProps {
   currentUser: User;
+  chatListId: number;
   chatList: ChatListItem[];
   handleSetChatList: Function;
+}
+
+interface DraftMessageStorage {
+  [x: number]: string;
 }
 
 /**
@@ -13,9 +18,14 @@ interface ChatTranscriptProps {
  */
 const ChatTranscript: React.FC<ChatTranscriptProps> = ({
   currentUser,
+  chatListId,
   chatList,
   handleSetChatList,
 }) => {
+  const [draftMessageStorage, setDraftMessageStorage] = useState<
+    DraftMessageStorage
+  >({});
+
   function handleSendNewMessage(newMessage: string) {
     const newChatListItem = {
       user: currentUser,
@@ -42,6 +52,14 @@ const ChatTranscript: React.FC<ChatTranscriptProps> = ({
     return chatUsers.join(", ");
   }
 
+  function handleDraftMessageStorage(draftMessage: string) {
+    console.log("updating draft", draftMessage);
+    setDraftMessageStorage({
+      ...draftMessageStorage,
+      [chatListId]: draftMessage,
+    });
+  }
+
   return (
     <div className="transcript">
       <div className="transcript-header">To: {getCurrentChatUsers()}</div>
@@ -64,6 +82,12 @@ const ChatTranscript: React.FC<ChatTranscriptProps> = ({
         })}
       </div>
       <ChatTranscriptInput
+        draftMessage={
+          draftMessageStorage[chatListId] ? draftMessageStorage[chatListId] : ""
+        }
+        handleDraftMessageStorage={(draftMessage: string) => {
+          handleDraftMessageStorage(draftMessage);
+        }}
         handleSendNewMessage={(newMessage: string) =>
           handleSendNewMessage(newMessage)
         }

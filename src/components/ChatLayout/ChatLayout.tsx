@@ -38,6 +38,7 @@ const ChatLayout: React.FC<ChatLayoutProps> = () => {
       />
       <ChatTranscript
         currentUser={currentUser}
+        chatListId={currentChatId}
         chatList={chatLists[currentChatId]}
         handleSetChatList={(newChatList: ChatListItem[]) => {
           updateChatLists(newChatList);
